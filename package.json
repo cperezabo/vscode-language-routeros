@@ -22,5 +22,6 @@
             "scopeName": "source.routeros",
             "path": "./syntaxes/RouterOS.tmLanguage"
         }]
-    }
+    }, 
+    "icon": "./images/icon.png"
 }
