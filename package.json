@@ -1,0 +1,26 @@
+{
+    "name": "routeros",
+    "displayName": "RouterOS Language",
+    "description": "Syntax highlighting for RouterOS scripts",
+    "version": "0.0.1",
+    "publisher": "cperezabo",
+    "engines": {
+        "vscode": "^1.13.0"
+    },
+    "categories": [
+        "Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "routeros",
+            "aliases": ["RouterOS", "routeros"],
+            "extensions": [".rsc"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "routeros",
+            "scopeName": "source.routeros",
+            "path": "./syntaxes/RouterOS.tmLanguage"
+        }]
+    }
+}
