@@ -1,9 +1,9 @@
 {
-    "name": "routeros",
-    "displayName": "RouterOS Language",
-    "description": "Syntax highlighting for RouterOS scripts",
-    "version": "0.0.1",
-    "publisher": "cperezabo",
+    "name": "routeros-syntax",
+    "displayName": "RouterOS Syntax Highlighting",
+    "description": "Syntax Highlighting for MikroTik RouterOS scripts",
+    "version": "1.0.0",
+    "publisher": "Cristián Pérez",
     "engines": {
         "vscode": "^1.13.0"
     },
