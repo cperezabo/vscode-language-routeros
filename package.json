@@ -23,5 +23,6 @@
             "path": "./syntaxes/RouterOS.tmLanguage"
         }]
     }, 
-    "icon": "./images/icon.png"
+    "icon": "./images/icon.png",
+    "license": "MIT"
 }
