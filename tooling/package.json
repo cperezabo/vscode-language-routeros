@@ -1,0 +1,15 @@
+{
+  "name": "routeros-grammar-tooling",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "description": "Coverage tooling: enumerate the live RouterOS command tree via /console/inspect and check our TextMate grammar against it.",
+  "scripts": {
+    "enumerate": "node enumerate.mjs",
+    "analyze": "node analyze.mjs"
+  },
+  "dependencies": {
+    "vscode-oniguruma": "^2.0.1",
+    "vscode-textmate": "^9.2.0"
+  }
+}

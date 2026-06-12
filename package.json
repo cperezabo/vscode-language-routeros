@@ -1,28 +1,47 @@
 {
-    "name": "routeros-syntax",
-    "displayName": "RouterOS Syntax Highlighting",
-    "description": "Syntax Highlighting for MikroTik RouterOS scripts",
-    "version": "1.0.0",
-    "publisher": "cperezabo",
-    "engines": {
-        "vscode": "^1.13.0"
-    },
-    "categories": [
-        "Languages"
+  "name": "routeros-syntax",
+  "displayName": "RouterOS Syntax Highlighting",
+  "description": "Syntax Highlighting for MikroTik RouterOS scripts",
+  "version": "2.0.0",
+  "publisher": "cperezabo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cperezabo/vscode-language-routeros.git"
+  },
+  "engines": {
+    "vscode": "^1.13.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "routeros",
+        "aliases": [
+          "RouterOS",
+          "routeros"
+        ],
+        "extensions": [
+          ".rsc"
+        ],
+        "configuration": "./language-configuration.json"
+      }
     ],
-    "contributes": {
-        "languages": [{
-            "id": "routeros",
-            "aliases": ["RouterOS", "routeros"],
-            "extensions": [".rsc"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "routeros",
-            "scopeName": "source.routeros",
-            "path": "./syntaxes/RouterOS.tmLanguage"
-        }]
-    }, 
-    "icon": "images/icon.png",
-    "license": "MIT"
+    "grammars": [
+      {
+        "language": "routeros",
+        "scopeName": "source.routeros",
+        "path": "./syntaxes/routeros.tmLanguage.json"
+      }
+    ]
+  },
+  "icon": "images/icon.png",
+  "license": "MIT",
+  "scripts": {
+    "package": "npx -y @vscode/vsce package -o routeros-syntax.vsix",
+    "install-extension": "code --install-extension routeros-syntax.vsix",
+    "login": "npx -y @vscode/vsce login cperezabo",
+    "publish": "npx -y @vscode/vsce publish"
+  }
 }

@@ -1,0 +1,11 @@
+.vscode/**
+.claude/**
+tooling/**
+node_modules/**
+.github/**
+.gitignore
+.gitattributes
+.DS_Store
+CLAUDE.md
+**/*.vsix
+**/*.snap
