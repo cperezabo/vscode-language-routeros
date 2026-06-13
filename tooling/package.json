@@ -6,7 +6,8 @@
   "description": "Coverage tooling: enumerate the live RouterOS command tree via /console/inspect and check our TextMate grammar against it.",
   "scripts": {
     "enumerate": "node enumerate.mjs",
-    "analyze": "node analyze.mjs"
+    "analyze": "node analyze.mjs",
+    "detect-code-fields": "node detect-code-fields.mjs"
   },
   "dependencies": {
     "vscode-oniguruma": "^2.0.1",

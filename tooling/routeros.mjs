@@ -10,6 +10,32 @@ export class RouterOS {
   parametersOf(_segments, _command) {
     throw new Error('subclass responsibility')
   }
+
+  valueTypeOf(_segments, _command, _field) {
+    throw new Error('subclass responsibility')
+  }
+}
+
+// What the router reports a field's value should look like: a normalized symbol
+// (e.g. "Script", "Source", "OnLink") and a human description ("string value",
+// "yes | no", "A.B.C.D    (IP address)"). Code-bearing fields are typed "Script".
+export class ValueType {
+  static reportedAs(symbol, description) {
+    return new ValueType(symbol, description.trim())
+  }
+
+  constructor(symbol, description) {
+    this.symbol = symbol
+    this.description = description
+  }
+
+  isScript() {
+    return this.symbol === 'Script'
+  }
+
+  isString() {
+    return this.description === 'string value'
+  }
 }
 
 // A child of a menu: either a navigable submenu or a runnable command. Each one
@@ -81,6 +107,13 @@ export class RouterOSOverRest extends RouterOS {
     return symbols
       .filter((s) => s.symbol && s['symbol-type'] === 'explanation' && !s.symbol.startsWith('<'))
       .map((s) => s.symbol)
+  }
+
+  async valueTypeOf(segments, command, field) {
+    const input = '/' + segments.map((s) => s + ' ').join('') + command + ' ' + field + '='
+    const symbols = await this.#inspect({ request: 'syntax', input })
+    const reported = symbols.at(-1) ?? {}
+    return ValueType.reportedAs(reported.symbol ?? '', reported.text ?? '')
   }
 
   async #inspect(body) {

@@ -7,6 +7,9 @@
   ],
   "patterns": [
     {
+      "include": "#embedded-code"
+    },
+    {
       "include": "#strings"
     },
     {
@@ -44,6 +47,37 @@
     }
   ],
   "repository": {
+    "embedded-code": {
+      "comment": "A few fields hold RouterOS code in their string value (a script body or an event handler), so we re-tokenize the content as source.routeros. The field list is enumerated — a deliberate exception to the otherwise structural grammar — because nothing in the syntax marks a string as code; the names were taken from the router itself (value-type symbol \"Script\", plus \"source\"), see tooling/. The leading lookbehind keeps a longer name like 'my-source' from matching, and requiring '=' right after the name keeps 'on-fail-retry-time' from matching 'on-fail'. Escaped quotes (\\\") do not close the string.",
+      "begin": "(?<![\\w./-])(source|script|on-event|on-up|on-down|on-login|on-logout|on-alert|on-backup|on-fail|on-master|up-script|down-script|test-script|lease-script|binding-script)(=)(\")",
+      "beginCaptures": {
+        "1": {
+          "name": "entity.other.attribute-name.routeros"
+        },
+        "2": {
+          "name": "keyword.operator.assignment.routeros"
+        },
+        "3": {
+          "name": "punctuation.definition.string.begin.routeros"
+        }
+      },
+      "end": "\"",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.end.routeros"
+        }
+      },
+      "name": "meta.embedded.routeros",
+      "patterns": [
+        {
+          "match": "\\\\(\\\\|[nrt$?\"abfv]|[0-9A-Fa-f]{2})",
+          "name": "constant.character.escape.routeros"
+        },
+        {
+          "include": "$self"
+        }
+      ]
+    },
     "comments": {
       "match": "#.*$",
       "name": "comment.line.number-sign.routeros"

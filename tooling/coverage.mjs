@@ -44,6 +44,20 @@ export class Menu {
     return this.#commandToProbe().flatMap((command) => command.parameters)
   }
 
+  // Every field of this menu (a name and a command that accepts it), each name once.
+  fields() {
+    const fields = []
+    const alreadySeen = new Set()
+    for (const command of Object.keys(this.params)) {
+      for (const name of this.params[command]) {
+        if (alreadySeen.has(name)) continue
+        alreadySeen.add(name)
+        fields.push({ command, name })
+      }
+    }
+    return fields
+  }
+
   toExport() {
     return { path: this.path, segments: this.segments, commands: this.commands, params: this.params }
   }
