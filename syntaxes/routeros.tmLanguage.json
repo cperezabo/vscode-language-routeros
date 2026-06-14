@@ -124,8 +124,8 @@
       ]
     },
     "command-path": {
-      "comment": "Config path: '/ip firewall filter' or '/ip/firewall/filter' (space- or slash-separated segments). The negative lookahead ends the path before a command word so '/ip firewall filter add' does not swallow 'add'.",
-      "match": "(?:^|(?<=[\\s\\[]))/(?:(?!(?:add|set|get|print|export|import|edit|find|remove|enable|disable|move|unset)\\b)[a-z0-9][a-z0-9-]*)(?:[\\s/]+(?!(?:add|set|get|print|export|import|edit|find|remove|enable|disable|move|unset)\\b)[a-z0-9][a-z0-9-]*)*",
+      "comment": "Config path: '/ip firewall filter' or '/ip/firewall/filter' (space- or slash-separated segments). The command lookahead ends the path before a command word so '/ip firewall filter add' keeps 'add' separate. A continuation segment must contain a letter ((?=[a-z0-9-]*[a-z])) and must be a whole token ending at a real separator: the trailing (?![a-z0-9.:=-]) forbids stopping mid-token or running into a '.', ':' or '=' (rejecting the token chars too, so greedy backtracking can't match one char short). So a host, IP, IPv6 or 'name=' value is left alone instead of being eaten: '/ping 8.8.8.8', '/ping example.com' and '/ping fe80::1' all stop the path at '/ping'. Every real menu segment has a letter (the only digit-initial one is '6to4').",
+      "match": "(?:^|(?<=[\\s\\[]))/(?:(?!(?:add|set|get|print|export|import|edit|find|remove|enable|disable|move|unset)\\b)[a-z0-9][a-z0-9-]*)(?:[\\s/]+(?!(?:add|set|get|print|export|import|edit|find|remove|enable|disable|move|unset)\\b)(?=[a-z0-9-]*[a-z])[a-z0-9][a-z0-9-]*(?![a-z0-9.:=-]))*",
       "name": "support.class.routeros"
     },
     "commands": {
