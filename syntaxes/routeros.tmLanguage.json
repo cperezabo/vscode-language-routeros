@@ -142,16 +142,32 @@
       "name": "constant.numeric.id.routeros"
     },
     "parameters": {
-      "comment": "Any 'name=' is a parameter — generic, no name list, so every RouterOS version is covered. The name charset allows '.', '/', '-' and a leading digit for real params like channel.band, rates-a/g and 802.3-sap.",
-      "match": "([A-Za-z0-9][A-Za-z0-9./-]*)(=)(?!=)",
-      "captures": {
-        "1": {
-          "name": "entity.other.attribute-name.routeros"
+      "patterns": [
+        {
+          "comment": "Any 'name=' is a parameter — generic, no name list, so every RouterOS version is covered. The name charset allows '.', '/', '-' and a leading digit for real params like channel.band, rates-a/g and 802.3-sap.",
+          "match": "([A-Za-z0-9][A-Za-z0-9./-]*)(=)(?!=)",
+          "captures": {
+            "1": {
+              "name": "entity.other.attribute-name.routeros"
+            },
+            "2": {
+              "name": "keyword.operator.assignment.routeros"
+            }
+          }
         },
-        "2": {
-          "name": "keyword.operator.assignment.routeros"
+        {
+          "comment": "Export unset marker: '!bridge-horizon' in an export means the parameter is not set. Only a whole space-separated word counts, so the '!' operator in expressions like '!$found' or '!($a)' is left alone.",
+          "match": "(?:^|(?<=\\s))(!)([A-Za-z0-9][A-Za-z0-9./-]*)(?=\\s|$)",
+          "captures": {
+            "1": {
+              "name": "keyword.operator.unset.routeros"
+            },
+            "2": {
+              "name": "entity.other.attribute-name.routeros"
+            }
+          }
         }
-      }
+      ]
     },
     "constants": {
       "patterns": [
