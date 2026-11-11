@@ -1,13 +1,16 @@
 # Grammar tooling
 
 Checks (and feeds) the grammar from a **real RouterOS device** instead of
-guesswork, via the `/console/inspect` REST API. Two jobs:
+guesswork, via the `/console/inspect` REST API. Three jobs:
 
 - **Coverage** — enumerate the router's entire command tree and verify our
   TextMate grammar tokenizes every path, command and parameter correctly.
 - **Code-field detection** — find which fields hold RouterOS code in their value
   (the list the grammar's `embedded-code` rule re-tokenizes), by asking the
   router each field's value type.
+- **Command-word detection** — list the words that end a path as a command (the
+  list the grammar's `command-path` rule stops at), from one or more captured
+  trees.
 
 Not part of the published extension (excluded via `.vscodeignore`).
 
@@ -28,6 +31,9 @@ npm run analyze                   # checks the grammar against tree.json
 ROUTER_URL=http://192.168.88.1 \
 ROUTER_USER=admin ROUTER_PASS=admin \
 npm run detect-code-fields        # lists the code fields (takes a few minutes)
+
+npm run detect-command-words      # lists the command words in tree.json
+node detect-command-words.mjs a.json b.json   # or merged from several versions
 ```
 
 `analyze` reports any path/command/parameter that does **not** tokenize as
@@ -37,6 +43,13 @@ expected, grouped by the scope it wrongly received — i.e. the coverage gaps.
 (plus `source`), with the menus where each appears and a ready-to-paste regex
 alternation for the grammar's `embedded-code` rule. It talks to the device for
 every field, so it is slower than enumeration.
+
+`detect-command-words` prints a ready-to-paste regex alternation for the
+grammar's `command-path` rule (it appears twice there: once to end the path,
+once to tag the command). Pass trees from several RouterOS versions to cover
+all of them. Names that are a command in one menu and a submenu in another
+(`info`, `update`, …) are listed with the segments before them and get a
+lookbehind on whichever side is shorter.
 
 ## How it works
 
@@ -54,10 +67,13 @@ every field, so it is slower than enumeration.
   as `entity.other.attribute-name`.
 - `code-fields.mjs` — `Field` (does its value hold code?) and `CodeFieldScan`
   (asks the router every field's value type and collects the code-bearing ones).
+- `command-words.mjs` — `CommandWords` (merges command trees and builds the
+  `command-path` alternation, resolving names that are also a menu).
 - `enumerate.mjs` — explores a real router, writes `tree.json` (gitignored;
   version-specific).
 - `analyze.mjs` — replays `tree.json` and prints the coverage gaps.
 - `detect-code-fields.mjs` — explores a real router and prints its code fields.
+- `detect-command-words.mjs` — reads captured trees and prints the command words.
 
 ## Scope and limits
 
