@@ -7,7 +7,8 @@
   "scripts": {
     "enumerate": "node enumerate.mjs",
     "analyze": "node analyze.mjs",
-    "detect-code-fields": "node detect-code-fields.mjs"
+    "detect-code-fields": "node detect-code-fields.mjs",
+    "detect-command-words": "node detect-command-words.mjs"
   },
   "dependencies": {
     "vscode-oniguruma": "^2.0.1",
