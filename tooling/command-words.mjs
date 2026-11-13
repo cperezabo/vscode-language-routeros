@@ -103,6 +103,8 @@ export class CommandWords {
   }
 
   #collect(menu) {
+    if (!menu.segments.length) return // the root '/' has no segment before its commands
+
     for (const command of menu.commands) {
       this.#word(command).isCommandAfter(menu.segments.at(-1))
     }
