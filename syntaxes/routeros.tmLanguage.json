@@ -108,7 +108,7 @@
           "match": "(:)(log)\\s+(debug|error|info|warning)\\b",
           "captures": {
             "1": {
-              "name": "punctuation.definition.keyword.routeros"
+              "name": "support.function.scripting.routeros punctuation.definition.keyword.routeros"
             },
             "2": {
               "name": "support.function.scripting.routeros"
