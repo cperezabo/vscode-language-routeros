@@ -1,0 +1,34 @@
+# Publishes the extension to the VS Code Marketplace when a version tag is pushed
+# (e.g. 2.2.0). Authenticates with Marketplace Trusted Publishing (OIDC), so no
+# PAT is stored: the publisher's Trusted Publishing policy must name this repo
+# and this workflow file (publish.yml).
+
+name: Publish
+
+on:
+  push:
+    tags: ['[0-9]+.[0-9]+.[0-9]+']
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Check the tag matches package.json
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          if [ "$version" != "$GITHUB_REF_NAME" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match package.json version $version"
+            exit 1
+          fi
+
+      - name: Publish
+        run: npx -y @vscode/vsce publish --oidc

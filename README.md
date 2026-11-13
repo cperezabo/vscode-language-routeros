@@ -31,14 +31,10 @@ npm run publish            # publish to the Marketplace (npm run publish -- mino
 
 `vsce` is fetched via `npx`, never installed — it tracks the Marketplace.
 
-### Publishing notes
+### Releasing
 
-- `npm run login` asks for an Azure DevOps PAT with the **Marketplace → Manage**
-  scope (all accessible organizations).
-- Bump `version` in `package.json` and add a `CHANGELOG.md` entry before
-  publishing (or `npm run publish -- minor` to bump and publish in one step).
-- Azure DevOps **global** PATs are being retired (Dec 1, 2026); for CI, Microsoft
-  recommends Microsoft Entra ID. Manual publish with a PAT still works until then.
+Bump `version` in `package.json`, add a `CHANGELOG.md` entry, and push a tag with
+that version (e.g. `2.2.0`): GitHub Actions publishes it to the Marketplace.
 
 ---
 
